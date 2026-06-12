@@ -8,6 +8,9 @@ export default function BotAccess() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [copied, setCopied] = useState(false)
+  const [postsRemaining, setPostsRemaining] = useState(null)
+  const [botToken, setBotToken] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -15,7 +18,28 @@ export default function BotAccess() {
     }
   }, [status, router])
 
-  if (status === 'loading') {
+  // fetch real post count from supabase
+  useEffect(() => {
+    if (status === 'authenticated') {
+      fetch('/api/user/profile')
+        .then(res => res.json())
+        .then(data => {
+          if (!data.error) {
+            setPostsRemaining(data.posts_remaining)
+            setBotToken(data.bot_token)
+          } else {
+            setPostsRemaining(session?.user?.posts_remaining ?? 0)
+          }
+          setLoading(false)
+        })
+        .catch(() => {
+          setPostsRemaining(session?.user?.posts_remaining ?? 0)
+          setLoading(false)
+        })
+    }
+  }, [status, session])
+
+  if (status === 'loading' || loading) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ color: '#6b7280' }}>Loading...</p>
@@ -23,15 +47,104 @@ export default function BotAccess() {
     )
   }
 
-  // this will be a real unique token later
-  // generated when user signs up
-  const botToken = "postcraft_abc123xyz"
-  const botLink = `https://t.me/PostCraftAIBot?start=${botToken}`
+  // use real bot token from supabase
+  const botLink = botToken ? `https://t.me/PostCraftAIBot?start=${botToken}` : ''
 
   function handleCopy() {
     navigator.clipboard.writeText(botLink)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  // if no posts remaining, show paywall
+  if (postsRemaining <= 0) {
+    return (
+      <>
+        <Head>
+          <title>Bot Access — PostCraft AI</title>
+        </Head>
+
+        <div className="bot-access-page">
+          <div className="bot-access-inner">
+
+            <div className="bot-access-header">
+              <h1 className="bot-access-title">No Posts Remaining</h1>
+              <p className="bot-access-sub">
+                You have used all your posts. Buy more to continue creating.
+              </p>
+            </div>
+
+            {/* ── PAYWALL CARD ──────── */}
+            <div style={{
+              background: 'linear-gradient(135deg, #1e1b4b, #4c1d95)',
+              borderRadius: '16px',
+              padding: '40px',
+              textAlign: 'center',
+              color: 'white',
+              marginBottom: '32px',
+            }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔒</div>
+              <h2 style={{ margin: '0 0 8px', fontSize: '24px', fontWeight: '700' }}>
+                Post Credits Exhausted
+              </h2>
+              <p style={{ margin: '0 0 24px', color: '#c4b5fd', fontSize: '15px', lineHeight: '1.6' }}>
+                Your free trial post has been used. Purchase more posts to keep creating
+                amazing AI-generated content for your social media.
+              </p>
+              <Link href="/pricing" style={{
+                display: 'inline-block',
+                background: 'white',
+                color: '#4c1d95',
+                padding: '14px 32px',
+                borderRadius: '10px',
+                fontSize: '16px',
+                fontWeight: '700',
+                textDecoration: 'none',
+                transition: 'transform 0.2s',
+              }}>
+                View Pricing Plans →
+              </Link>
+            </div>
+
+            {/* ── PRICING PREVIEW ───── */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '16px',
+              marginBottom: '32px',
+            }}>
+              {[
+                { name: 'Single', price: '₹120', posts: '1 post' },
+                { name: 'Starter', price: '₹299', posts: '3 posts' },
+                { name: 'Pro', price: '₹899', posts: '10 posts' },
+              ].map((plan, i) => (
+                <div key={i} style={{
+                  background: '#18181b',
+                  border: '1px solid #27272a',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{ fontSize: '14px', color: '#a1a1aa', marginBottom: '4px' }}>{plan.name}</div>
+                  <div style={{ fontSize: '28px', fontWeight: '700', color: '#e4e4e7' }}>{plan.price}</div>
+                  <div style={{ fontSize: '13px', color: '#71717a' }}>{plan.posts}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ marginTop: '24px' }}>
+              <Link
+                href="/dashboard"
+                style={{ color: '#7c3aed', fontSize: '14px', fontWeight: '500' }}
+              >
+                ← Back to Dashboard
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      </>
+    )
   }
 
   return (
@@ -49,6 +162,23 @@ export default function BotAccess() {
             <p className="bot-access-sub">
               Use the link below to access your personal PostCraft AI bot
             </p>
+          </div>
+
+          {/* ── POSTS REMAINING BADGE ─ */}
+          <div style={{
+            background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
+            border: '1px solid #86efac',
+            borderRadius: '10px',
+            padding: '12px 20px',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '14px',
+            color: '#166534',
+            fontWeight: '500',
+          }}>
+            ✅ You have <strong>{postsRemaining}</strong> post{postsRemaining !== 1 ? 's' : ''} remaining
           </div>
 
           {/* ── BOT LINK CARD ──────── */}
@@ -154,7 +284,7 @@ export default function BotAccess() {
                 <h3>Describe Your Image</h3>
                 <p>
                   Send a message describing the image you want.
-                  For example: "a sunset over mountains, cinematic style"
+                  For example: &quot;a sunset over mountains, cinematic style&quot;
                 </p>
               </div>
             </div>
