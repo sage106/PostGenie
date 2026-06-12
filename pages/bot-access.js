@@ -48,7 +48,7 @@ export default function BotAccess() {
   }
 
   // use real bot token from supabase
-  const botLink = botToken ? `https://t.me/PostCraftAIBot?start=${botToken}` : ''
+  const botLink = botToken ? `https://t.me/Post_Geniebot?start=${botToken}` : ''
 
   function handleCopy() {
     navigator.clipboard.writeText(botLink)
