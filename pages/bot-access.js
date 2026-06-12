@@ -1,0 +1,201 @@
+import Head from 'next/head'
+import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+
+export default function BotAccess() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login')
+    }
+  }, [status, router])
+
+  if (status === 'loading') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#6b7280' }}>Loading...</p>
+      </div>
+    )
+  }
+
+  // this will be a real unique token later
+  // generated when user signs up
+  const botToken = "postcraft_abc123xyz"
+  const botLink = `https://t.me/PostCraftAIBot?start=${botToken}`
+
+  function handleCopy() {
+    navigator.clipboard.writeText(botLink)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Bot Access — PostCraft AI</title>
+      </Head>
+
+      <div className="bot-access-page">
+        <div className="bot-access-inner">
+
+          {/* ── HEADER ─────────────── */}
+          <div className="bot-access-header">
+            <h1 className="bot-access-title">Your Bot Access</h1>
+            <p className="bot-access-sub">
+              Use the link below to access your personal PostCraft AI bot
+            </p>
+          </div>
+
+          {/* ── BOT LINK CARD ──────── */}
+          <div className="bot-link-card">
+            <h2>Your Unique Bot Link</h2>
+            <p>
+              This link is personal to you. Do not share it with anyone.
+            </p>
+            <div className="bot-link-box">
+              {botLink}
+            </div>
+            <button className="bot-link-copy" onClick={handleCopy}>
+              {copied ? '✓ Copied!' : 'Copy Link'}
+            </button>
+          </div>
+
+          {/* ── PLATFORMS ──────────── */}
+          <h2 className="dash-section-title">Open Bot On</h2>
+          <div className="platform-grid">
+            <a
+              href={botLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="platform-card"
+            >
+              <div className="platform-icon" style={{ background: '#eff6ff' }}>
+                ✈️
+              </div>
+              <div>
+                <div className="platform-name">Telegram</div>
+                <div className="platform-desc">
+                  Click to open bot in Telegram app
+                </div>
+              </div>
+            </a>
+
+            <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
+              <div className="platform-icon" style={{ background: '#f0fdf4' }}>
+                💬
+              </div>
+              <div>
+                <div className="platform-name">WhatsApp</div>
+                <div className="platform-desc">
+                  Coming soon
+                </div>
+              </div>
+            </div>
+
+            <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
+              <div className="platform-icon" style={{ background: '#faf5ff' }}>
+                🎮
+              </div>
+              <div>
+                <div className="platform-name">Discord</div>
+                <div className="platform-desc">
+                  Coming soon
+                </div>
+              </div>
+            </div>
+
+            <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
+              <div className="platform-icon" style={{ background: '#fff7ed' }}>
+                💼
+              </div>
+              <div>
+                <div className="platform-name">Slack</div>
+                <div className="platform-desc">
+                  Coming soon
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── HOW TO USE ─────────── */}
+          <div className="how-to-card">
+            <h2>How To Use The Bot</h2>
+
+            <div className="how-to-step">
+              <div className="step-number">1</div>
+              <div className="step-content">
+                <h3>Connect Your Social Accounts</h3>
+                <p>
+                  Go to your dashboard and connect your Instagram
+                  and Facebook accounts before using the bot.
+                </p>
+              </div>
+            </div>
+
+            <div className="how-to-step">
+              <div className="step-number">2</div>
+              <div className="step-content">
+                <h3>Open The Bot</h3>
+                <p>
+                  Click the Telegram link above to open your
+                  personal bot. Click Start to begin.
+                </p>
+              </div>
+            </div>
+
+            <div className="how-to-step">
+              <div className="step-number">3</div>
+              <div className="step-content">
+                <h3>Describe Your Image</h3>
+                <p>
+                  Send a message describing the image you want.
+                  For example: "a sunset over mountains, cinematic style"
+                </p>
+              </div>
+            </div>
+
+            <div className="how-to-step">
+              <div className="step-number">4</div>
+              <div className="step-content">
+                <h3>AI Generates and Checks</h3>
+                <p>
+                  The bot generates your image and self checks
+                  quality. It keeps improving until it scores
+                  7 out of 10 or higher.
+                </p>
+              </div>
+            </div>
+
+            <div className="how-to-step">
+              <div className="step-number">5</div>
+              <div className="step-content">
+                <h3>Approve and Post</h3>
+                <p>
+                  You will see the image with a caption and hashtags.
+                  Reply yes to post it or describe what to change.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* ── BACK TO DASHBOARD ──── */}
+          <div style={{ marginTop: '24px' }}>
+            <Link
+              href="/dashboard"
+              style={{ color: '#7c3aed', fontSize: '14px', fontWeight: '500' }}
+            >
+              ← Back to Dashboard
+            </Link>
+          </div>
+
+        </div>
+      </div>
+    </>
+  )
+}
