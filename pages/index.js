@@ -38,12 +38,12 @@ export default function Home() {
             </div>
             <div className="grid-3">
               {[
-                { icon: "💬", title: "Describe Your Image", desc: "Message the bot on WhatsApp or Telegram with what you want to post." },
-                { icon: "🎨", title: "AI Creates It", desc: "AI generates the image, checks quality, and writes your caption and hashtags." },
-                { icon: "🚀", title: "Auto Posted", desc: "Approve it and it posts to Instagram, Facebook and Twitter instantly." },
+                { num: "01", title: "Describe Your Image", desc: "Message the bot on WhatsApp or Telegram with what you want to post." },
+                { num: "02", title: "AI Creates It", desc: "AI generates the image, checks quality, and writes your caption and hashtags." },
+                { num: "03", title: "Auto Posted", desc: "Approve it and it posts to Instagram, Facebook and Twitter instantly." },
               ].map((item, i) => (
                 <div key={i} className="card" style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '40px', marginBottom: '16px' }}>{item.icon}</div>
+                  <div className="step-icon">{item.num}</div>
                   <h3 className="card-title">{item.title}</h3>
                   <p className="card-text">{item.desc}</p>
                 </div>
@@ -61,15 +61,14 @@ export default function Home() {
             </div>
             <div className="grid-3">
               {[
-                { icon: "🤖", title: "AI Image Generation", desc: "Powered by Flux — creates stunning images from scratch every time." },
-                { icon: "✅", title: "Self Quality Check", desc: "AI checks its own work and regenerates until the image is perfect." },
-                { icon: "📱", title: "WhatsApp & Telegram", desc: "No new app needed. Use the messaging apps you already have." },
-                { icon: "📸", title: "Posts Everywhere", desc: "Instagram, Facebook and Twitter/X all posted at the same time." },
-                { icon: "✍️", title: "Auto Captions", desc: "AI writes a great caption and 10 hashtags for every post." },
-                { icon: "⚡", title: "Done in 30 Seconds", desc: "From describing your image to it being live on social media." },
+                { title: "AI Image Generation", desc: "Powered by Stability AI — creates stunning images from scratch every time." },
+                { title: "Self Quality Check", desc: "AI checks its own work and regenerates until the image is perfect." },
+                { title: "WhatsApp & Telegram", desc: "No new app needed. Use the messaging apps you already have." },
+                { title: "Posts Everywhere", desc: "Instagram, Facebook and Twitter/X all posted at the same time." },
+                { title: "Auto Captions", desc: "AI writes a great caption and 15 hashtags for every post." },
+                { title: "Done in 30 Seconds", desc: "From describing your image to it being live on social media." },
               ].map((f, i) => (
                 <div key={i} className="card">
-                  <div style={{ fontSize: '32px', marginBottom: '12px' }}>{f.icon}</div>
                   <h3 className="card-title">{f.title}</h3>
                   <p className="card-text">{f.desc}</p>
                 </div>
@@ -107,7 +106,7 @@ export default function Home() {
         {/* ── CTA ──────────────────── */}
         <section className="cta">
           <h2>Ready to automate your social media?</h2>
-          <p>Start with 5 free posts. No credit card required.</p>
+          <p>Start with 1 free post. No credit card required.</p>
           <Link href="/signup" className="btn-white">Get Started Free</Link>
         </section>
 

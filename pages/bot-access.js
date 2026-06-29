@@ -75,34 +75,14 @@ export default function BotAccess() {
             </div>
 
             {/* ── PAYWALL CARD ──────── */}
-            <div style={{
-              background: 'linear-gradient(135deg, #1e1b4b, #4c1d95)',
-              borderRadius: '16px',
-              padding: '40px',
-              textAlign: 'center',
-              color: 'white',
-              marginBottom: '32px',
-            }}>
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔒</div>
-              <h2 style={{ margin: '0 0 8px', fontSize: '24px', fontWeight: '700' }}>
-                Post Credits Exhausted
-              </h2>
-              <p style={{ margin: '0 0 24px', color: '#c4b5fd', fontSize: '15px', lineHeight: '1.6' }}>
+            <div className="paywall-card">
+              <h2 className="paywall-title">Post Credits Exhausted</h2>
+              <p className="paywall-text">
                 Your free trial post has been used. Purchase more posts to keep creating
                 amazing AI-generated content for your social media.
               </p>
-              <Link href="/pricing" style={{
-                display: 'inline-block',
-                background: 'white',
-                color: '#4c1d95',
-                padding: '14px 32px',
-                borderRadius: '10px',
-                fontSize: '16px',
-                fontWeight: '700',
-                textDecoration: 'none',
-                transition: 'transform 0.2s',
-              }}>
-                View Pricing Plans →
+              <Link href="/pricing" className="paywall-btn">
+                View Pricing Plans
               </Link>
             </div>
 
@@ -137,7 +117,7 @@ export default function BotAccess() {
                 href="/dashboard"
                 style={{ color: '#7c3aed', fontSize: '14px', fontWeight: '500' }}
               >
-                ← Back to Dashboard
+                Back to Dashboard
               </Link>
             </div>
 
@@ -165,20 +145,8 @@ export default function BotAccess() {
           </div>
 
           {/* ── POSTS REMAINING BADGE ─ */}
-          <div style={{
-            background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
-            border: '1px solid #86efac',
-            borderRadius: '10px',
-            padding: '12px 20px',
-            marginBottom: '24px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            fontSize: '14px',
-            color: '#166534',
-            fontWeight: '500',
-          }}>
-            ✅ You have <strong>{postsRemaining}</strong> post{postsRemaining !== 1 ? 's' : ''} remaining
+          <div className="posts-badge">
+            You have <strong>{postsRemaining}</strong> post{postsRemaining !== 1 ? 's' : ''} remaining
           </div>
 
           {/* ── BOT LINK CARD ──────── */}
@@ -191,7 +159,7 @@ export default function BotAccess() {
               {botLink}
             </div>
             <button className="bot-link-copy" onClick={handleCopy}>
-              {copied ? '✓ Copied!' : 'Copy Link'}
+              {copied ? 'Copied!' : 'Copy Link'}
             </button>
           </div>
 
@@ -205,7 +173,7 @@ export default function BotAccess() {
               className="platform-card"
             >
               <div className="platform-icon" style={{ background: '#eff6ff' }}>
-                ✈️
+                <span className="connect-initial">TG</span>
               </div>
               <div>
                 <div className="platform-name">Telegram</div>
@@ -215,21 +183,26 @@ export default function BotAccess() {
               </div>
             </a>
 
-            <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
-              <div className="platform-icon" style={{ background: '#f0fdf4' }}>
-                💬
+            <a
+              href={botToken ? `https://wa.me/919506072466?text=start_${botToken}` : "https://wa.me/919506072466?text=start"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="platform-card"
+            >
+              <div className="platform-icon" style={{ background: '#e8f5e9' }}>
+                <span className="connect-initial" style={{ color: '#2e7d32' }}>WA</span>
               </div>
               <div>
                 <div className="platform-name">WhatsApp</div>
                 <div className="platform-desc">
-                  Coming soon
+                  Open PostCraft AI in WhatsApp
                 </div>
               </div>
-            </div>
+            </a>
 
             <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
-              <div className="platform-icon" style={{ background: '#faf5ff' }}>
-                🎮
+              <div className="platform-icon" style={{ background: '#f5f3ff' }}>
+                <span className="connect-initial">DC</span>
               </div>
               <div>
                 <div className="platform-name">Discord</div>
@@ -241,7 +214,7 @@ export default function BotAccess() {
 
             <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
               <div className="platform-icon" style={{ background: '#fff7ed' }}>
-                💼
+                <span className="connect-initial">SL</span>
               </div>
               <div>
                 <div className="platform-name">Slack</div>
@@ -251,6 +224,7 @@ export default function BotAccess() {
               </div>
             </div>
           </div>
+
 
           {/* ── HOW TO USE ─────────── */}
           <div className="how-to-card">
@@ -281,10 +255,10 @@ export default function BotAccess() {
             <div className="how-to-step">
               <div className="step-number">3</div>
               <div className="step-content">
-                <h3>Describe Your Image</h3>
+                <h3>Describe Your Poster</h3>
                 <p>
-                  Send a message describing the image you want.
-                  For example: &quot;a sunset over mountains, cinematic style&quot;
+                  Send a message describing the poster you want.
+                  For example: &quot;shoe shop sale poster, 30% off&quot;
                 </p>
               </div>
             </div>
@@ -294,7 +268,7 @@ export default function BotAccess() {
               <div className="step-content">
                 <h3>AI Generates and Checks</h3>
                 <p>
-                  The bot generates your image and self checks
+                  The bot generates your poster and self checks
                   quality. It keeps improving until it scores
                   7 out of 10 or higher.
                 </p>
@@ -306,7 +280,7 @@ export default function BotAccess() {
               <div className="step-content">
                 <h3>Approve and Post</h3>
                 <p>
-                  You will see the image with a caption and hashtags.
+                  You will see the poster with a caption and hashtags.
                   Reply yes to post it or describe what to change.
                 </p>
               </div>
@@ -320,7 +294,7 @@ export default function BotAccess() {
               href="/dashboard"
               style={{ color: '#7c3aed', fontSize: '14px', fontWeight: '500' }}
             >
-              ← Back to Dashboard
+              Back to Dashboard
             </Link>
           </div>
 

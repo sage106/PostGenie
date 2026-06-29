@@ -61,9 +61,9 @@ export default function Dashboard() {
   }
 
   const socialAccounts = [
-    { name: 'Instagram', icon: '📸', bg: '#fdf2f8', connected: false },
-    { name: 'Facebook', icon: '👤', bg: '#eff6ff', connected: false },
-    { name: 'Twitter/X', icon: '🐦', bg: '#f0f9ff', connected: false },
+    { name: 'Instagram', initial: 'IG', bg: '#fdf2f8', connected: false },
+    { name: 'Facebook', initial: 'FB', bg: '#eff6ff', connected: false },
+    { name: 'Twitter/X', initial: 'X', bg: '#f0f9ff', connected: false },
   ]
 
   const postHistory = []
@@ -80,7 +80,7 @@ export default function Dashboard() {
           {/* ── HEADER ─────────────── */}
           <div className="dash-header">
             <h1 className="dash-title">
-              Welcome back, {session?.user?.name?.split(' ')[0]} 👋
+              Welcome back, {session?.user?.name?.split(' ')[0]}
             </h1>
             <p className="dash-sub">
               Here is an overview of your account
@@ -108,7 +108,7 @@ export default function Dashboard() {
               </div>
               <div className="stat-sub">
                 <Link href="/pricing" style={{ color: '#7c3aed' }}>
-                  Upgrade plan →
+                  Upgrade plan
                 </Link>
               </div>
             </div>
@@ -116,37 +116,17 @@ export default function Dashboard() {
 
           {/* ── NO POSTS WARNING ───── */}
           {stats?.posts_remaining === 0 && (
-            <div style={{
-              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-              border: '1px solid #f59e0b',
-              borderRadius: '12px',
-              padding: '20px 24px',
-              marginBottom: '24px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '16px',
-              flexWrap: 'wrap',
-            }}>
+            <div className="dash-warning">
               <div>
-                <h3 style={{ margin: 0, color: '#92400e', fontSize: '16px' }}>
-                  ⚠️ No posts remaining
+                <h3 className="dash-warning-title">
+                  No posts remaining
                 </h3>
-                <p style={{ margin: '4px 0 0', color: '#a16207', fontSize: '14px' }}>
+                <p className="dash-warning-text">
                   Your free trial post has been used. Buy more posts to continue creating.
                 </p>
               </div>
-              <Link href="/pricing" style={{
-                background: '#7c3aed',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: '600',
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-              }}>
-                Buy Posts →
+              <Link href="/pricing" className="dash-warning-btn">
+                Buy Posts
               </Link>
             </div>
           )}
@@ -155,7 +135,7 @@ export default function Dashboard() {
           <div className="dash-section">
             <div className="bot-card">
               <div className="bot-card-left">
-                <h3>{stats?.posts_remaining > 0 ? 'Your Bot is Ready!' : 'Buy Posts to Use Bot'}</h3>
+                <h3>{stats?.posts_remaining > 0 ? 'Your Bot is Ready' : 'Buy Posts to Use Bot'}</h3>
                 <p>
                   {stats?.posts_remaining > 0
                     ? 'Click to get your unique bot link and start creating posts'
@@ -165,11 +145,11 @@ export default function Dashboard() {
               </div>
               {stats?.posts_remaining > 0 ? (
                 <Link href="/bot-access" className="bot-card-btn">
-                  Get Bot Link →
+                  Get Bot Link
                 </Link>
               ) : (
                 <Link href="/pricing" className="bot-card-btn" style={{ background: '#f59e0b' }}>
-                  Buy Posts →
+                  Buy Posts
                 </Link>
               )}
             </div>
@@ -186,7 +166,7 @@ export default function Dashboard() {
                       className="connect-icon"
                       style={{ background: account.bg }}
                     >
-                      {account.icon}
+                      <span className="connect-initial">{account.initial}</span>
                     </div>
                     <div>
                       <div className="connect-name">{account.name}</div>
@@ -196,7 +176,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   {account.connected ? (
-                    <span className="connected-badge">✓ Connected</span>
+                    <span className="connected-badge">Connected</span>
                   ) : (
                     <button className="connect-btn">Connect</button>
                   )}

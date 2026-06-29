@@ -29,7 +29,7 @@ export default function Navbar() {
             <Link href="/dashboard" className="nav-link">
               Dashboard
             </Link>
-            <button onClick={() => signOut()} className="nav-link">
+            <button onClick={() => signOut()} className="nav-logout">
               Logout
             </button>
           </>
