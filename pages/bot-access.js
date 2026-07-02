@@ -199,30 +199,6 @@ export default function BotAccess() {
                 </div>
               </div>
             </a>
-
-            <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
-              <div className="platform-icon" style={{ background: '#f5f3ff' }}>
-                <span className="connect-initial">DC</span>
-              </div>
-              <div>
-                <div className="platform-name">Discord</div>
-                <div className="platform-desc">
-                  Coming soon
-                </div>
-              </div>
-            </div>
-
-            <div className="platform-card" style={{ opacity: '0.5', cursor: 'not-allowed' }}>
-              <div className="platform-icon" style={{ background: '#fff7ed' }}>
-                <span className="connect-initial">SL</span>
-              </div>
-              <div>
-                <div className="platform-name">Slack</div>
-                <div className="platform-desc">
-                  Coming soon
-                </div>
-              </div>
-            </div>
           </div>
 
 
@@ -233,27 +209,16 @@ export default function BotAccess() {
             <div className="how-to-step">
               <div className="step-number">1</div>
               <div className="step-content">
-                <h3>Connect Your Social Accounts</h3>
+                <h3>Open The Bot</h3>
                 <p>
-                  Go to your dashboard and connect your Instagram
-                  and Facebook accounts before using the bot.
+                  Click the Telegram or WhatsApp link above to open your
+                  personal bot.
                 </p>
               </div>
             </div>
 
             <div className="how-to-step">
               <div className="step-number">2</div>
-              <div className="step-content">
-                <h3>Open The Bot</h3>
-                <p>
-                  Click the Telegram link above to open your
-                  personal bot. Click Start to begin.
-                </p>
-              </div>
-            </div>
-
-            <div className="how-to-step">
-              <div className="step-number">3</div>
               <div className="step-content">
                 <h3>Describe Your Poster</h3>
                 <p>
@@ -264,7 +229,7 @@ export default function BotAccess() {
             </div>
 
             <div className="how-to-step">
-              <div className="step-number">4</div>
+              <div className="step-number">3</div>
               <div className="step-content">
                 <h3>AI Generates and Checks</h3>
                 <p>
@@ -276,12 +241,12 @@ export default function BotAccess() {
             </div>
 
             <div className="how-to-step">
-              <div className="step-number">5</div>
+              <div className="step-number">4</div>
               <div className="step-content">
-                <h3>Approve and Post</h3>
+                <h3>Get Your Poster</h3>
                 <p>
-                  You will see the poster with a caption and hashtags.
-                  Reply yes to post it or describe what to change.
+                  You will receive the generated poster with a caption and hashtags.
+                  Save it and post it on your own social media!
                 </p>
               </div>
             </div>

@@ -1,5 +1,9 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Script from 'next/script'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 const plans = [
   {
@@ -11,9 +15,8 @@ const plans = [
     features: [
       "1 free AI generated image",
       "One time trial only",
-      "Auto post to Instagram and Facebook",
       "Caption and hashtag generation",
-      "Telegram bot access",
+      "Telegram & WhatsApp bot access",
     ],
     popular: false,
   },
@@ -25,9 +28,8 @@ const plans = [
     once: false,
     features: [
       "1 AI generated image",
-      "Auto post to Instagram and Facebook",
       "Caption and hashtag generation",
-      "Telegram bot access",
+      "Telegram & WhatsApp bot access",
     ],
     popular: false,
   },
@@ -40,9 +42,8 @@ const plans = [
     features: [
       "3 AI generated images",
       "Save ₹21 vs buying single",
-      "Auto post to Instagram and Facebook",
       "Caption and hashtag generation",
-      "Telegram bot access",
+      "Telegram & WhatsApp bot access",
       "Post history",
     ],
     popular: false,
@@ -56,9 +57,8 @@ const plans = [
     features: [
       "10 AI generated images",
       "Save ₹301 vs buying single",
-      "Auto post to Instagram and Facebook",
       "Caption and hashtag generation",
-      "Telegram bot access",
+      "Telegram & WhatsApp bot access",
       "Post history",
       "Priority image generation",
     ],
@@ -67,12 +67,102 @@ const plans = [
 ]
 
 export default function Pricing() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const [loadingPlan, setLoadingPlan] = useState(null)
+
+  async function handleBuyPlan(plan) {
+    if (status !== 'authenticated') {
+      router.push(`/login?redirect=/pricing`)
+      return
+    }
+
+    setLoadingPlan(plan.name)
+
+    try {
+      // 1. Create order on the backend
+      const res = await fetch('/api/payment/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ planName: plan.name })
+      })
+
+      const data = await res.json()
+      if (!res.ok || data.error) {
+        throw new Error(data.error || 'Failed to create payment order')
+      }
+
+      // 2. Open Razorpay checkout interface
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        name: "PostGenie AI",
+        description: `${plan.name} Plan - ${plan.posts}`,
+        order_id: data.orderId,
+        handler: async function (response) {
+          setLoadingPlan(plan.name)
+          try {
+            // 3. Verify signature on the backend
+            const verifyRes = await fetch('/api/payment/verify', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                planName: plan.name
+              })
+            })
+
+            const verifyData = await verifyRes.json()
+            if (!verifyRes.ok || verifyData.error) {
+              throw new Error(verifyData.error || 'Payment verification failed')
+            }
+
+            // 4. Redirect to dashboard with success query
+            router.push('/dashboard?payment=success')
+          } catch (err) {
+            console.error("Verification failed:", err)
+            alert(`Payment verification failed: ${err.message}`)
+            setLoadingPlan(null)
+          }
+        },
+        prefill: {
+          name: session.user.name || '',
+          email: session.user.email || ''
+        },
+        theme: {
+          color: "#7c3aed"
+        },
+        modal: {
+          ondismiss: function() {
+            setLoadingPlan(null)
+          }
+        }
+      }
+
+      const rzp = new window.Razorpay(options)
+      rzp.open()
+
+    } catch (error) {
+      console.error("Payment initiation failed:", error)
+      alert(`Could not initiate payment: ${error.message}`)
+      setLoadingPlan(null)
+    }
+  }
+
   return (
     <>
       <Head>
         <title>Pricing — PostCraft AI</title>
         <meta name="description" content="Simple post based pricing." />
       </Head>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
       <main>
 
@@ -136,12 +226,29 @@ export default function Pricing() {
                     ))}
                   </div>
 
-                  <Link
-                    href="/signup"
-                    className={plan.popular ? 'plan-btn-white' : 'plan-btn'}
-                  >
-                    {plan.once ? 'Try For Free' : 'Buy Now'}
-                  </Link>
+                  {plan.once ? (
+                    <Link
+                      href={status === 'authenticated' ? "/dashboard" : "/signup"}
+                      className={plan.popular ? 'plan-btn-white' : 'plan-btn'}
+                    >
+                      {status === 'authenticated' ? 'Go to Dashboard' : 'Try For Free'}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => handleBuyPlan(plan)}
+                      disabled={loadingPlan !== null}
+                      className={plan.popular ? 'plan-btn-white' : 'plan-btn'}
+                      style={{
+                        width: '100%',
+                        border: 'none',
+                        cursor: loadingPlan !== null ? 'not-allowed' : 'pointer',
+                        textAlign: 'center',
+                        display: 'block'
+                      }}
+                    >
+                      {loadingPlan === plan.name ? 'Processing...' : 'Buy Now'}
+                    </button>
+                  )}
 
                 </div>
               ))}
@@ -172,11 +279,11 @@ export default function Pricing() {
               },
               {
                 q: "Which social media platforms are supported?",
-                a: "We currently support Instagram and Facebook. More platforms coming soon."
+                a: "PostCraft generates high-quality posters and captions that you can download and post on any social media platform, including Instagram, Facebook, and Twitter/X."
               },
               {
                 q: "Which messaging app does the bot use?",
-                a: "The bot works on Telegram. WhatsApp, Discord and Slack are coming soon."
+                a: "The bot currently supports Telegram and WhatsApp."
               },
               {
                 q: "How good are the AI generated images?",

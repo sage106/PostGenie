@@ -21,7 +21,7 @@ export default function Home() {
           <p>
             Describe what you want on WhatsApp or Telegram.
             AI creates the image, writes your caption,
-            and posts it automatically.
+            and delivers it to your chat instantly.
           </p>
           <div className="hero-buttons">
             <Link href="/signup" className="btn">Start For Free</Link>
@@ -40,7 +40,7 @@ export default function Home() {
               {[
                 { num: "01", title: "Describe Your Image", desc: "Message the bot on WhatsApp or Telegram with what you want to post." },
                 { num: "02", title: "AI Creates It", desc: "AI generates the image, checks quality, and writes your caption and hashtags." },
-                { num: "03", title: "Auto Posted", desc: "Approve it and it posts to Instagram, Facebook and Twitter instantly." },
+                { num: "03", title: "Ready to Post", desc: "Get the completed poster and caption, ready for you to share!" },
               ].map((item, i) => (
                 <div key={i} className="card" style={{ textAlign: 'center' }}>
                   <div className="step-icon">{item.num}</div>
@@ -64,9 +64,9 @@ export default function Home() {
                 { title: "AI Image Generation", desc: "Powered by Stability AI — creates stunning images from scratch every time." },
                 { title: "Self Quality Check", desc: "AI checks its own work and regenerates until the image is perfect." },
                 { title: "WhatsApp & Telegram", desc: "No new app needed. Use the messaging apps you already have." },
-                { title: "Posts Everywhere", desc: "Instagram, Facebook and Twitter/X all posted at the same time." },
+                { title: "Any Platform", desc: "Perfectly sized images and captions formatted for any social media platform." },
                 { title: "Auto Captions", desc: "AI writes a great caption and 15 hashtags for every post." },
-                { title: "Done in 30 Seconds", desc: "From describing your image to it being live on social media." },
+                { title: "Done in 30 Seconds", desc: "From describing your image to having a completed poster in your hand." },
               ].map((f, i) => (
                 <div key={i} className="card">
                   <h3 className="card-title">{f.title}</h3>

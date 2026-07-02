@@ -9,6 +9,16 @@ export default function Dashboard() {
   const router = useRouter()
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showSuccessToast, setShowSuccessToast] = useState(false)
+
+  // check for payment success in query params
+  useEffect(() => {
+    if (router.query.payment === 'success') {
+      setShowSuccessToast(true)
+      // Clean query params so user doesn't see toast on page refresh
+      router.replace('/dashboard', undefined, { shallow: true })
+    }
+  }, [router.query.payment])
 
   // redirect to login if not logged in
   useEffect(() => {
@@ -60,11 +70,7 @@ export default function Dashboard() {
     )
   }
 
-  const socialAccounts = [
-    { name: 'Instagram', initial: 'IG', bg: '#fdf2f8', connected: false },
-    { name: 'Facebook', initial: 'FB', bg: '#eff6ff', connected: false },
-    { name: 'Twitter/X', initial: 'X', bg: '#f0f9ff', connected: false },
-  ]
+
 
   const postHistory = []
 
@@ -76,6 +82,39 @@ export default function Dashboard() {
 
       <div className="dash-page">
         <div className="dash-inner">
+
+          {/* ── PAYMENT SUCCESS TOAST ── */}
+          {showSuccessToast && (
+            <div style={{
+              background: '#10b981',
+              color: 'white',
+              padding: '16px 20px',
+              borderRadius: '8px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              fontWeight: '500',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+            }}>
+              <span>🎉 Payment successful! Your post credits have been credited to your account.</span>
+              <button
+                onClick={() => setShowSuccessToast(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'white',
+                  cursor: 'pointer',
+                  fontSize: '20px',
+                  lineHeight: '1',
+                  fontWeight: 'bold',
+                  padding: '0 4px'
+                }}
+              >
+                ×
+              </button>
+            </div>
+          )}
 
           {/* ── HEADER ─────────────── */}
           <div className="dash-header">
@@ -155,35 +194,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* ── SOCIAL ACCOUNTS ────── */}
-          <div className="dash-section">
-            <h2 className="dash-section-title">Connected Social Accounts</h2>
-            <div className="connect-grid">
-              {socialAccounts.map((account, i) => (
-                <div key={i} className="connect-card">
-                  <div className="connect-card-left">
-                    <div
-                      className="connect-icon"
-                      style={{ background: account.bg }}
-                    >
-                      <span className="connect-initial">{account.initial}</span>
-                    </div>
-                    <div>
-                      <div className="connect-name">{account.name}</div>
-                      <div className="connect-status">
-                        {account.connected ? 'Connected' : 'Not connected'}
-                      </div>
-                    </div>
-                  </div>
-                  {account.connected ? (
-                    <span className="connected-badge">Connected</span>
-                  ) : (
-                    <button className="connect-btn">Connect</button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
 
           {/* ── POST HISTORY ───────── */}
           <div className="dash-section">
