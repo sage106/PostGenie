@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>PostCraft AI</title>
+        <title>PostGenie</title>
         <meta name="description" content="Create and post AI images to social media automatically" />
       </Head>
 
@@ -113,13 +113,13 @@ export default function Home() {
         {/* ── FOOTER ───────────────── */}
         <footer className="footer">
           <div className="footer-inner">
-            <div className="footer-logo">PostCraft AI</div>
+            <div className="footer-logo">PostGenie</div>
             <div className="footer-links">
               <Link href="/pricing" className="footer-link">Pricing</Link>
               <Link href="/login" className="footer-link">Login</Link>
               <Link href="/signup" className="footer-link">Sign Up</Link>
             </div>
-            <div className="footer-copy">© 2026 PostCraft AI</div>
+            <div className="footer-copy">© 2026 PostGenie</div>
           </div>
         </footer>
 

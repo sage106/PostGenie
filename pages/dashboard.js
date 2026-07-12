@@ -77,7 +77,7 @@ export default function Dashboard() {
   return (
     <>
       <Head>
-        <title>Dashboard — PostCraft AI</title>
+        <title>Dashboard — PostGenie</title>
       </Head>
 
       <div className="dash-page">

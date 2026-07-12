@@ -159,7 +159,7 @@ export default function Pricing() {
   return (
     <>
       <Head>
-        <title>Pricing — PostCraft AI</title>
+        <title>Pricing — PostGenie</title>
         <meta name="description" content="Simple post based pricing." />
       </Head>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
@@ -279,7 +279,7 @@ export default function Pricing() {
               },
               {
                 q: "Which social media platforms are supported?",
-                a: "PostCraft generates high-quality posters and captions that you can download and post on any social media platform, including Instagram, Facebook, and Twitter/X."
+                a: "PostGenie generates high-quality posters and captions that you can download and post on any social media platform, including Instagram, Facebook, and Twitter/X."
               },
               {
                 q: "Which messaging app does the bot use?",
@@ -310,13 +310,13 @@ export default function Pricing() {
         {/* ── FOOTER ───────────────── */}
         <footer className="footer">
           <div className="footer-inner">
-            <div className="footer-logo">PostCraft AI</div>
+            <div className="footer-logo">PostGenie</div>
             <div className="footer-links">
               <Link href="/" className="footer-link">Home</Link>
               <Link href="/login" className="footer-link">Login</Link>
               <Link href="/signup" className="footer-link">Sign Up</Link>
             </div>
-            <div className="footer-copy">© 2026 PostCraft AI</div>
+            <div className="footer-copy">© 2026 PostGenie</div>
           </div>
         </footer>
 

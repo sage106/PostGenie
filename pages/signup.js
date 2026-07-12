@@ -49,14 +49,14 @@ export default function Signup() {
   return (
     <>
       <Head>
-        <title>Sign Up — PostCraft AI</title>
+        <title>Sign Up — PostGenie</title>
       </Head>
 
       <div className="auth-page">
         <div className="auth-box">
 
           {/* logo */}
-          <div className="auth-logo">PostCraft AI</div>
+          <div className="auth-logo">PostGenie</div>
 
           {/* title */}
           <h1 className="auth-title">Create your account</h1>

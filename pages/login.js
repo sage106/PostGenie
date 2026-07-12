@@ -46,14 +46,14 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login — PostCraft AI</title>
+        <title>Login — PostGenie</title>
       </Head>
 
       <div className="auth-page">
         <div className="auth-box">
 
           {/* logo */}
-          <div className="auth-logo">PostCraft AI</div>
+          <div className="auth-logo">PostGenie</div>
 
           {/* title */}
           <h1 className="auth-title">Welcome back</h1>

@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <nav className="nav">
       <Link href="/" className="nav-logo">
-        PostCraft AI
+        PostGenie
       </Link>
 
       <div className="nav-links">

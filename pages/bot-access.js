@@ -61,7 +61,7 @@ export default function BotAccess() {
     return (
       <>
         <Head>
-          <title>Bot Access — PostCraft AI</title>
+          <title>Bot Access — PostGenie</title>
         </Head>
 
         <div className="bot-access-page">
@@ -130,7 +130,7 @@ export default function BotAccess() {
   return (
     <>
       <Head>
-        <title>Bot Access — PostCraft AI</title>
+        <title>Bot Access — PostGenie</title>
       </Head>
 
       <div className="bot-access-page">
@@ -140,7 +140,7 @@ export default function BotAccess() {
           <div className="bot-access-header">
             <h1 className="bot-access-title">Your Bot Access</h1>
             <p className="bot-access-sub">
-              Use the link below to access your personal PostCraft AI bot
+              Use the link below to access your personal PostGenie bot
             </p>
           </div>
 
@@ -195,7 +195,7 @@ export default function BotAccess() {
               <div>
                 <div className="platform-name">WhatsApp</div>
                 <div className="platform-desc">
-                  Open PostCraft AI in WhatsApp
+                  Open PostGenie in WhatsApp
                 </div>
               </div>
             </a>
